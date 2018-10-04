@@ -1,0 +1,23 @@
+body {
+}
+.node {
+	stroke: #fff;
+	stroke-width: 1.5px;
+}
+.link {
+	stroke: #999;
+	stroke-opacity: .6;
+}
+.d3-tip {
+	max-height: 500px;
+	max-width: 200px;
+	line-height: 1;
+	color: black;
+	border: 1px solid #aca1a1;
+	background: white;
+	padding: 5px;
+}
+#d3-container {
+	margin: 0 auto;
+    width: 100%;
+}

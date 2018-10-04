@@ -1,0 +1,179 @@
+{
+    "directed": false,
+    "multigraph": false,
+    "graph": {},
+    "nodes": [
+        {
+            "label": "Feanor",
+            "Agglomeration of nodes": "1",
+            "fm": "KMU-innovativ",
+            "Empf\u00e4ngerkategorie DE": "KMU",
+            "Laufzeitbeginn": "2017-03-01 00:00:00",
+            "Laufzeitende": "2020-02-29 00:00:00",
+            "Projektsumme": "576157",
+            "F\u00f6rderquote": "60",
+            "Zuwendung": "345694.0",
+            "degree": 2,
+            "parity": 1,
+            "betweenness centrality": 0.0,
+            "harmonic centrality": 0.0,
+            "id": 0
+        },
+        {
+            "label": "Captain Spok",
+            "Agglomeration of nodes": "1",
+            "fm": "KMU-innovativ",
+            "Empf\u00e4ngerkategorie DE": "FE",
+            "Laufzeitbeginn": "2017-03-01 00:00:00",
+            "Laufzeitende": "2020-02-29 00:00:00",
+            "Projektsumme": "288890",
+            "F\u00f6rderquote": "120",
+            "Zuwendung": "346668.0",
+            "degree": 4,
+            "parity": 1,
+            "betweenness centrality": 0.19047619047619047,
+            "harmonic centrality": 0.19047619047619047,
+            "id": 1
+        },
+        {
+            "label": "Peter Pan",
+            "Agglomeration of nodes": "1",
+            "fm": "KMU-innovativ",
+            "Empf\u00e4ngerkategorie DE": "KMU",
+            "Laufzeitbeginn": "2017-03-01 00:00:00",
+            "Laufzeitende": "2020-02-29 00:00:00",
+            "Projektsumme": "364380",
+            "F\u00f6rderquote": "60",
+            "Zuwendung": "218628.0",
+            "degree": 2,
+            "parity": 1,
+            "betweenness centrality": 0.0,
+            "harmonic centrality": 0.0,
+            "id": 2
+        },
+        {
+            "label": "The young Anakin Skywalker",
+            "Agglomeration of nodes": "1",
+            "fm": "Per Aspera ad Astra",
+            "Empf\u00e4ngerkategorie DE": "KMU",
+            "Laufzeitbeginn": "2017-05-01 00:00:00",
+            "Laufzeitende": "2020-04-30 00:00:00",
+            "Projektsumme": "332361",
+            "F\u00f6rderquote": "60",
+            "Zuwendung": "199416.0",
+            "degree": 2,
+            "parity": 1,
+            "betweenness centrality": 0.0,
+            "harmonic centrality": 0.0,
+            "id": 3
+        },
+        {
+            "label": "Gandalf the grey",
+            "Agglomeration of nodes": "1",
+            "fm": "Per Aspera ad Astra",
+            "Empf\u00e4ngerkategorie DE": "FE",
+            "Laufzeitbeginn": "2017-05-01 00:00:00",
+            "Laufzeitende": "2020-04-30 00:00:00",
+            "Projektsumme": "192655",
+            "F\u00f6rderquote": "120",
+            "Zuwendung": "231186.0",
+            "degree": 2,
+            "parity": 1,
+            "betweenness centrality": 0.0,
+            "harmonic centrality": 0.0,
+            "id": 4
+        },
+        {
+            "label": "North Korea",
+            "Agglomeration of nodes": "1",
+            "fm": "Per Aspera ad Astra",
+            "Empf\u00e4ngerkategorie DE": "Sonstige",
+            "Laufzeitbeginn": "2017-04-01 00:00:00",
+            "Laufzeitende": "2019-09-30 00:00:00",
+            "Projektsumme": "287674",
+            "F\u00f6rderquote": "120",
+            "Zuwendung": "345208.8",
+            "degree": 1,
+            "parity": 0,
+            "betweenness centrality": 0.0,
+            "harmonic centrality": 0.0,
+            "id": 5
+        },
+        {
+            "label": "Klingones",
+            "Agglomeration of nodes": "1",
+            "fm": "Per Aspera ad Astra",
+            "Empf\u00e4ngerkategorie DE": "FE",
+            "Laufzeitbeginn": "2017-04-01 00:00:00",
+            "Laufzeitende": "2019-09-30 00:00:00",
+            "Projektsumme": "546459",
+            "F\u00f6rderquote": "95",
+            "Zuwendung": "519136.0",
+            "degree": 1,
+            "parity": 0,
+            "betweenness centrality": 0.0,
+            "harmonic centrality": 0.0,
+            "id": 6
+        },
+        {
+            "label": "Pluto",
+            "Agglomeration of nodes": "1",
+            "fm": "KMU-innovativ",
+            "Empf\u00e4ngerkategorie DE": "GU",
+            "Laufzeitbeginn": "2017-04-01 00:00:00",
+            "Laufzeitende": "2019-09-30 00:00:00",
+            "Projektsumme": "540480",
+            "F\u00f6rderquote": "50",
+            "Zuwendung": "270240.0",
+            "degree": 0,
+            "parity": 1,
+            "betweenness centrality": 0.0,
+            "harmonic centrality": 0.0,
+            "id": 7
+        }
+    ],
+    "links": [
+        {
+            "label": "Entwicklung eines Exergaming-Systems zur Erprobung von MTI-Konzepten am Beispiel der Parkinson-Krankheit",
+            "weight": 1.0,
+            "source": 0,
+            "target": 1
+        },
+        {
+            "label": "Entwicklung eines Exergaming-Systems zur Erprobung von MTI-Konzepten am Beispiel der Parkinson-Krankheit",
+            "weight": 1.0,
+            "source": 0,
+            "target": 2
+        },
+        {
+            "label": "Entwicklung eines Exergaming-Systems zur Erprobung von MTI-Konzepten am Beispiel der Parkinson-Krankheit",
+            "weight": 1.0,
+            "source": 1,
+            "target": 2
+        },
+        {
+            "label": "Entwicklung eines Hyperantriebs",
+            "weight": 1.0,
+            "source": 1,
+            "target": 3
+        },
+        {
+            "label": "Entwicklung eines Hyperantriebs",
+            "weight": 1.0,
+            "source": 1,
+            "target": 4
+        },
+        {
+            "label": "Entwicklung eines Hyperantriebs",
+            "weight": 1.0,
+            "source": 3,
+            "target": 4
+        },
+        {
+            "label": "Entwicklung einer Laserkanone",
+            "weight": 1.0,
+            "source": 5,
+            "target": 6
+        }
+    ]
+}

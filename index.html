@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<head>
+	<title>Interactive network graph</title>
+    <meta charset="utf-8">
+
+	<link rel="stylesheet" type="text/css" href="index.css">
+
+	<script src="http://d3js.org/d3.v3.min.js" charset="utf-8">// D3 script </script>
+	<script type='text/javascript' src="http://labratrevenge.com/d3-tip/javascripts/d3.tip.v0.6.3.js">// D3 tooltips to show up labels </script>
+
+</head>
+<body>
+	
+	<div id="d3-container" class="center"></div>
+	
+	<script type="text/javascript">
+		// Thanks for some code from https://andrewmellor.co.uk/blog/articles/2014/12/14/d3-networks/
+
+		// ========== Declarations ==========
+		var fileName = "graph_small.json"
+		var minRadius = 4;
+
+		// Color scale for node colors.
+		var color = d3.scale.category10();
+
+		// The height and width of our viz.
+		var width = window.innerWidth,
+			height = window.innerHeight;
+
+		// Data arrays
+		// Matrix saying what is connected to what
+		var linkedByIndex = [];
+
+		// We create a force-directed dynamic graph layout.
+		// D3 has number of layouts - refer to the documentation.
+		var force = d3.layout.force()
+			.charge(-120)
+			.linkDistance(30)
+			.size([width, height]);
+
+		// We select the < div> and add an container
+		var svg = d3.select("#d3-container").select("svg")
+		if (svg.empty()) {
+			svg = d3.select("#d3-container").append("svg")
+						.attr("width", width)
+						.attr("height", height);
+		}
+
+		// ========== Set up tooltip ==========
+		var tip = d3.tip()
+			.attr('class', 'd3-tip')
+			.offset([-10, 0])
+			.html(function (d) {
+				return d.label;
+			})
+		svg.call(tip);
+
+		// ========== Specify node and edge style functionality ==========
+		// The nodes radius
+		function nodeRadius(d) {
+			return minRadius + d.degree / 2;
+		}
+		// The nodes color
+		function nodeColor(d) {
+			return color(d.degree);
+		}
+		// The nodes standard opacity
+		function nodeOpac(d) {
+			return 1;
+		}
+		// The nodes opacity in faded mode
+		function nodeOpacFaded(d) {
+			return 0.3;
+		}
+		// The links width
+		function linkWidth(d) {
+			return d.width;
+		}
+		// The links standard opacity
+		function linkOpac(d) {
+			return 1;
+		}
+		// The links width
+		function linkWidthSelected(d) {
+			return d.width * 2;
+		}
+		// The links standard opacity
+		function linkOpacFaded(d) {
+			return 0.7;
+		}
+
+		// ========== Start the graph ==========
+		// We load the JSON network file.
+		d3.json(fileName, function(error, graph) {
+			// Within this block, the network has been loaded
+			// and stored in the 'graph' object.
+
+			// ========== Definition of objects ==========
+			// We load the nodes and links into the force-directed
+			// graph and initialize the dynamics.
+			force.nodes(graph.nodes)
+				.links(graph.links)
+				.start();
+
+			// We create a < line> SVG element for each link
+			// in the graph.
+			var link = svg.selectAll(".link")
+				.data(graph.links)
+				.enter().append("line")
+				.attr("class", "link")
+				.attr("stroke-width", function(d) {
+					return linkWidth(d);
+				});
+
+			// We create a < circle> SVG element for each node
+			// in the graph, and we specify a few attributes.
+			var node = svg.selectAll(".node")
+				.data(graph.nodes)
+				.enter().append("circle")
+				.attr("class", "node")
+				.attr("r", function(d) {
+					return nodeRadius(d); 
+				})
+				.style("fill", function(d) {
+					return nodeColor(d); 
+				})
+				.call(force.drag);
+
+			// ========== Positioning of nodes and edges ==========
+			// We bind the positions of the SVG elements
+			// to the positions of the dynamic force-directed graph,
+			// at each time step.
+			force.on("tick", function() {
+				link.attr("x1", function(d) { return d.source.x; })
+					.attr("y1", function(d) { return d.source.y; })
+					.attr("x2", function(d) { return d.target.x; })
+					.attr("y2", function(d) { return d.target.y; });
+
+				node.attr("cx", function(d) { return d.x; })
+					.attr("cy", function(d) { return d.y; });
+			});
+
+			// ========== Specify svg functionality ==========
+			// Disable context menu
+			svg.on("contextmenu", rightClick);
+
+			function rightClick() {
+				d3.event.preventDefault();
+				selectOff();
+			}
+
+			// ========== Specify node functionality ==========
+			// Append the selection functionality
+			node.on('dblclick', selectOn);
+
+			// Select a sub graph with click
+			node.on('click', selectSubGraph);
+
+			// The mouse hover label with data from the networkx graph.
+			node.append("title")
+				.text(function(d) {
+					return "Degree: " + d.degree + "\n" + "Parity: " + d.parity;
+				});
+
+			// MouseOver events
+			node.on("mouseover", tip.show)
+				.on("mouseout", tip.hide);
+
+			// Fill the node label array
+			for (var i = 0; i < graph.nodes.length - 1; i++) {
+				labelArray.push(graph.nodes[i].label);
+			}
+			labelArray = labelArray.sort();
+
+			// Fill the matrix logging what is connected to what
+			for(var i=0; i < graph.nodes.length; i++) {
+				linkedByIndex[i] = [];
+				for(var j=0; j < graph.nodes.length; j++) {
+					linkedByIndex[i][j] = false;
+				}
+			}
+
+			for (var i = 0; i < graph.nodes.length; i++) {
+				linkedByIndex[i][i] = true;
+			};
+
+			graph.links.forEach(function (d) {
+				linkedByIndex[d.source.index][d.target.index] = true;
+				linkedByIndex[d.target.index][d.source.index] = true;
+			});
+
+			graph.nodes.forEach(function (a) {
+				graph.nodes.forEach(function (b) {
+					if (neighboring(a.index, b.index)) {
+						graph.nodes.forEach(function (c) {
+							if (neighboring(b.index, c.index)) {
+								linkedByIndex[a.index][c.index] = true;
+								linkedByIndex[c.index][a.index] = true;
+							}
+						});
+					}
+				});
+			});
+
+			// ========== Selection of subnetworks ==========
+			// Toggle stores whether the highlighting is on
+			var toggle = 0;
+
+			function toggleOn() {
+				toggle = 1;
+				console.log("DEBUG: Selection mode: " + toggle);
+			}
+
+			function toggleOff() {
+				toggle = 0;
+				console.log("DEBUG: Selection mode: " + toggle);
+			}
+
+			// Looks up whether a pair of nodes are neighbors by its indexes
+			function neighboring(a, b) {
+				return linkedByIndex[a][b];
+			}
+
+			function selectOn() {
+				if (toggle == 0) {
+					// Switch on toggle and select the sub graph
+					toggleOn();
+					node.style("opacity", function (o) {
+						return nodeOpacFaded(o);
+					});
+					link.style("opacity", function (o) {
+						return linkOpacFaded(o);
+					});
+					selectSubGraph(d3.select(this).node().__data__);
+				}
+			}
+
+			function selectOff() {
+				if (toggle == 1) {
+					// Restore everything back to normal
+					node.style("opacity", function (o) {
+						return nodeOpac(o);
+					});
+					link.style("opacity", function (o) {
+						return linkOpac(o);
+					});
+					toggleOff();
+				}
+			}
+
+			function selectSubGraph(d) {
+				if (toggle == 1) {
+					// Select the node and its connected ones
+					node.attr("class", function (o) {
+						if (neighboring(d.index, o.index)) {
+							return "node selected";
+						} else {
+							return "node";
+						}
+					});
+					// Select the connected links
+					/*link.attr("class", function (o) {
+						if (neighboring(d.index, o.target.index)) {
+							return "link selected";
+						} else {
+							return "link";
+						}
+					});*/
+					// Alter the style attributes
+					node.filter(".selected")
+						.style("opacity", function (d) {
+							return nodeOpac(d);
+					});
+					link.filter(".selected")
+						.style("opacity", function (d) {
+							return linkOpac(d);
+					});
+					console.log("DEBUG: Node " + d.index + " of " + node.size() + " selected");
+				}
+			}
+		});
+	</script>
+</body>
