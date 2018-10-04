@@ -166,12 +166,6 @@
 			node.on("mouseover", tip.show)
 				.on("mouseout", tip.hide);
 
-			// Fill the node label array
-			for (var i = 0; i < graph.nodes.length - 1; i++) {
-				labelArray.push(graph.nodes[i].label);
-			}
-			labelArray = labelArray.sort();
-
 			// Fill the matrix logging what is connected to what
 			for(var i=0; i < graph.nodes.length; i++) {
 				linkedByIndex[i] = [];
